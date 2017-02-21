@@ -36,6 +36,8 @@ public class MainActivity extends AppCompatActivity {
     private Bitmap bitmap;
     private Bitmap final_bitmap;
 
+    private TextView url_text;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,6 +70,15 @@ public class MainActivity extends AppCompatActivity {
                 }
                 ((ImageView) findViewById(R.id.image_file)).setImageBitmap(final_bitmap);
                 uri = getImageUri(getApplicationContext(), final_bitmap);
+            }
+        });
+        url_text = (TextView)findViewById(R.id.image_url);
+        url_text.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), ImageActivity.class);
+                intent.putExtra("url", url_text.getText().toString());
+                startActivity(intent);
             }
         });
     }
@@ -182,7 +193,7 @@ public class MainActivity extends AppCompatActivity {
             super.onPostExecute(aBoolean);
             if (progressDialog != null)
                 progressDialog.dismiss();
-            ((TextView) findViewById(R.id.image_url)).setText(url);
+            url_text.setText(url);
         }
     }
 }
